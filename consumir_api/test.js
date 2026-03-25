@@ -10,11 +10,12 @@
 fetch("https://api.github.com/userss")
     .then(response => {
         if(!response.ok){
-            throw new Error(`Erro no servidor: ${response.status}`);
+            throw new Error("Nao encontrada")
         }
+
         return response.json().then(data => ({
             status: response.status,
             data: data
-        }))})
-    .then(data => console.log(data.status, data.data))
-    .catch(error => console.log(error))
+        }))
+    })
+    .then(data => console.log(data.status))
