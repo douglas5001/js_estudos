@@ -22,7 +22,16 @@ while(stop_fun == true){
     const dados = await extract(url)
 
     console.log("Rodou a pagina", page)
-    console.log(dados)
+    
+    const dados_formatados = dados.map(item => {
+        return {
+            login: item.login,
+            id: item.idd ?? "nao existe"
+        }
+    })
+
+    total_dados.push(...dados_formatados);
+
 
     if (page === 101) {
                 console.log("Limite de teste atingido.");
@@ -34,5 +43,7 @@ while(stop_fun == true){
     page++
 
 }
+
+console.log(total_dados);
 
     
