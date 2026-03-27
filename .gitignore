@@ -1,5 +1,7 @@
 api_node/node_modules/*
 
+ais/api_typescript/node_modules/*
+
 api_node/.env
 
 
