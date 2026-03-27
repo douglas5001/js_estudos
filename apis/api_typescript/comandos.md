@@ -22,3 +22,9 @@ npx ts-node index.ts
 npm install -D tsx
 
 npx tsx index.ts
+
+### Instale o express
+
+`````
+npm install --save-dev @types/express
+`````
