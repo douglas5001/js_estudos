@@ -1,13 +1,21 @@
-
+import axios from 'axios';
 //https://api.github.com/users
 
-async function get_data(url: string){
-    const response = await fetch(url);
-    return response.json();
+interface User {
+    login: string;
+}
+
+async function get_data(url: string): Promise<User[]>{
+    const response = await axios.get<User[]>(url);
+    return response.data;
 }
 
 const url: string = "https://api.github.com/users";
 
 const data = await get_data(url);
 
-console.log(data);
+const transform = data.map(item => ({
+    login: item.login
+}))
+
+console.log(transform);

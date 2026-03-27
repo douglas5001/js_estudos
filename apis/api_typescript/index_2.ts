@@ -6,4 +6,4 @@ let number2: number = 10;
 
 const resultado: number = number1 + number2;
 
-console.log(resultado)
+console.table(resultado)
