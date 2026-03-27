@@ -1,11 +1,11 @@
 import express, { type Request, type Response } from 'express';
+import { z } from 'zod';
 
-
-interface CreateUserDTO {
-    name: string;
-    email: string;
-    age: number;
-}
+const UserSchema = z.object({
+    name: z.string().min(3, "Nome muito curto"),
+    email: z.string().email("E-mail invalido"),
+    age: z.number().int().positive("A idade de ser um numero inteiro")
+})
 
 const app = express();
 const port = 8080;
@@ -17,9 +17,19 @@ app.get('/', (req: Request, res: Response) => {
     res.send("Ola, Teste backend")  
 });
 
-app.post(`/usuarios`, (req: Request, res: Response)=>{
-    const {name, age, email} = req.body as CreateUserDTO;
-    res.status(201).json({ user: name, age: age, email: email})
+app.post('/usuarios', (req: Request, res: Response) => {
+  const result = UserSchema.safeParse(req.body);
+
+  if (!result.success) {
+    return res.status(400).json({
+      erro: "Dados inválidos",
+      detalhes: result.error.format() 
+    });
+  }
+
+  const { name, age } = result.data;
+  
+  res.status(201).json({ mensagem: `Usuário ${name} criado com sucesso!` });
 });
 
 app.listen(port, () => {
